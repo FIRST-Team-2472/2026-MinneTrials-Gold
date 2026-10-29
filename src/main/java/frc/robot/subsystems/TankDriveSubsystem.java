@@ -1,19 +1,14 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.math.kinematics.Odometry;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -29,9 +24,7 @@ public class TankDriveSubsystem extends SubsystemBase {
     private RelativeEncoder leftEncoder = leftDriveMotor.getEncoder();
     private RelativeEncoder rightEncoder = rightDriveMotor.getEncoder();
     private Pigeon2 gyro = new Pigeon2(DriveConstants.kPigeonID);
-    DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(DriveConstants.kTrackWidth));
     DifferentialDriveOdometry odometry;
-    PoseEstimator poseEstimator;
 
     public TankDriveSubsystem() {
         SparkMaxConfig config = new SparkMaxConfig();
@@ -41,7 +34,6 @@ public class TankDriveSubsystem extends SubsystemBase {
         rightDriveMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         odometry = new DifferentialDriveOdometry(getRotation(), getLeftDist(), getRightDist());
-        poseEstimator = new PoseEstimator<>(kinematics, odometry, null, null);
     }
 
     public void setMotorPower(double powerLeft, double powerRight) {
@@ -55,7 +47,7 @@ public class TankDriveSubsystem extends SubsystemBase {
     }
 
     public Pose2d getPosition() {
-        return poseEstimator.getEstimatedPosition();
+        return odometry.getPoseMeters();
     }
 
     public Rotation2d getRotation() {
