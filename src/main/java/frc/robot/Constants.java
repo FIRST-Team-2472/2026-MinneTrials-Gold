@@ -15,6 +15,7 @@ package frc.robot;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kDeadband = 10;
   }
 
   public static class DriveConstants {
@@ -22,9 +23,13 @@ public final class Constants {
     public static final int kRightDriveMotorId = 1;
     public static final int kPigeonID = 55;
 
+    public static final int kGearRatio = 12;
+
     public static final double kTrackWidth = 2;
     public static final double kWheelCircumference = 0;
+
+    public static final double kMaxSpeed = 3.2;
     
-    public static final int kDeadband = 10;
+    //public static final int kDeadband = 10;
   }
 }
