@@ -1,9 +1,11 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -71,5 +73,14 @@ public class TankDriveSubsystem extends SubsystemBase {
 
         double inchSpeed = (leftV + rightV) / 2 / DriveConstants.kGearRatio * DriveConstants.kWheelCircumference; // calculate speed in inches per minute
         return Units.inchesToMeters(inchSpeed) / 60; // divide by 60 to convert from per minute to per second
+    }
+
+    public Pigeon2 getPigeon2(){
+        return gyro;
+    }
+
+    public void addVisionMeasurement(Pose2d limelightPose, double timestamp, Vector<N3> stdDevs){
+        poseEstimator.setVisionMeasurementStdDevs(stdDevs);
+        poseEstimator.addVisionMeasurement(limelightPose, timestamp);
     }
 }

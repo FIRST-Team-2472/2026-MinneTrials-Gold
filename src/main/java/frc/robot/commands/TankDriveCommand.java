@@ -4,8 +4,7 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.AccelLimiter;
-import frc.robot.MotorPowerController;
+import frc.robot.generated.MotorPowerController;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.TankDriveSubsystem;
