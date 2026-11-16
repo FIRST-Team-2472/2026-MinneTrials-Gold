@@ -28,7 +28,7 @@ public final class Constants {
     public static final double kTrackWidth = 2;
     public static final double kWheelCircumference = 0;
 
-    public static final double kMaxSpeed = 3.2;
+    public static final double kMaxAcceleration = 3.2;
     
     //public static final int kDeadband = 10;
   }

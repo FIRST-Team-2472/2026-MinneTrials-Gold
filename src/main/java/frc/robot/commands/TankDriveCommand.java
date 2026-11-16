@@ -26,7 +26,7 @@ public class TankDriveCommand extends Command {
         addRequirements(tankDriveSubsystem);
 
         motorPowerController = new MotorPowerController(0, 0, 0, 0, 0, 0, 0); //TODO: set these values
-        limiter = new SlewRateLimiter(DriveConstants.kMaxSpeed);
+        limiter = new SlewRateLimiter(DriveConstants.kMaxAcceleration);
     }
     
 
@@ -50,7 +50,8 @@ public class TankDriveCommand extends Command {
         } else {
             drivePower = motorPowerController.calculate(drivePower, -tankDriveSubsystem.getSpeed());
         }
-        turnPower = motorPowerController.
+
+        drivePower = limiter.calculate(drivePower);
         
         double leftPower = drivePower - turnPower;
         double rightPower = drivePower + turnPower;
