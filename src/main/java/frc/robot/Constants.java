@@ -17,7 +17,7 @@ public final class Constants {
     public static final int kXboxControllerPort = 0;
     public static final int kLeftJoystickPort = 1;
     public static final int kRightJoystickPort = 2;
-    public static final int kDeadband = 10;
+    public static final double kDeadband = 0.1;
   }
 
   public static class DriveConstants {
