@@ -16,4 +16,10 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  public static class IntakeConstants {
+    public static final int armMotorPortId = 3;
+    public static final int armSpeedLimit = 25;
+    public static final int maxArmAngle = 180;
+  }
 }
