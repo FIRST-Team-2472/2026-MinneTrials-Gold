@@ -79,7 +79,7 @@ public class TankDriveSubsystem extends SubsystemBase {
         return gyro;
     }
 
-    public void addVisionMeasurement(Pose2d limelightPose, double timestamp, Vector<N3> stdDevs){
+    public void addVisionMeasurement(Pose2d limelightPose, double timestamp, Vector<N3> stdDevs){ // updates pose based on limelight readins
         poseEstimator.setVisionMeasurementStdDevs(stdDevs);
         poseEstimator.addVisionMeasurement(limelightPose, timestamp);
     }

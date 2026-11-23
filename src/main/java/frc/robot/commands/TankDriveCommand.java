@@ -24,7 +24,7 @@ public class TankDriveCommand extends Command {
         this.rightJoystickX = rightJoystickX;
         addRequirements(tankDriveSubsystem);
 
-        motorPowerController = new MotorPowerController(0, 0, 0, 0, 0, 0, 0); //TODO: set these values
+        motorPowerController = new MotorPowerController(0, 0, 0, 0, 0, 0, 0); //TODO: tune PID aaaah scary
         limiter = new SlewRateLimiter(DriveConstants.kMaxAcceleration);
     }
     
@@ -37,6 +37,7 @@ public class TankDriveCommand extends Command {
         double drivePower = 0;
         double turnPower = 0;
         
+        //set motor power based on joysticks
         if (Math.abs(leftJoystickY.get()) > OperatorConstants.kDeadband) {
             drivePower = leftJoystickY.get();
         }
@@ -44,14 +45,15 @@ public class TankDriveCommand extends Command {
             turnPower = rightJoystickX.get();
         }
 
-        if (drivePower == 0) {
+        if (drivePower == 0) { //if robot isn't moving don't set speed based on motor power controller
             motorPowerController.calculate(drivePower, -tankDriveSubsystem.getSpeed());
-        } else {
+        } else { //if robot is moving, use motor power controller based on joystick values as set point
             drivePower = motorPowerController.calculate(drivePower, -tankDriveSubsystem.getSpeed());
         }
 
-        drivePower = limiter.calculate(drivePower);
+        drivePower = limiter.calculate(drivePower); // limit acceleration
         
+        // factor in the turn power to create turning
         double leftPower = drivePower - turnPower;
         double rightPower = drivePower + turnPower;
         
@@ -65,6 +67,6 @@ public class TankDriveCommand extends Command {
     
     @Override
     public void end(boolean param) {
-        tankDriveSubsystem.setMotorPower(0, 0);
+        tankDriveSubsystem.setMotorPower(0, 0); // stop moving when the command ends (robot is disabled)
     }
 }
